@@ -1,0 +1,17 @@
+<header class="jumbotron">
+  <h1 class="text-center">
+    {{title}}
+  </h1>
+</header>
+<main class="container">
+  <div class="row mb-4">
+    <div class="col-12">
+      <a routerLink="/cadastro" class="btn btn-primary">Nova foto</a>
+    </div>
+  </div>
+  <div class="row">
+    <card *ngFor="let foto of listaFotos" [dados]="foto" class="col-md-4 mb-4">
+      <foto [url]="foto.url" [titulo]="foto.titulo"></foto>
+    </card>
+  </div>
+</main>
