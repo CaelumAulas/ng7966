@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { FotoService } from '../servicos/foto.service';
+import { Foto } from '../foto/foto';
+import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'caelumpic-listagem',
@@ -9,19 +11,44 @@ import { HttpClient } from '@angular/common/http';
 export class ListagemComponent implements OnInit {
 
   title = 'ng7966';
-  listaFotos
+  listaFotos: Foto[] = [];
 
-  constructor(conexaoApi: HttpClient){
+  constructor(private fotoService: FotoService){
 
-    conexaoApi
-    .get('http://localhost:3000/v1/fotos')
-    .subscribe(
-      (fotosApi) => {
-        this.listaFotos = fotosApi        
-      }
-    )
+    this.fotoService
+      .listar()
+      .subscribe(
+        (fotosApi) => {
+          this.listaFotos = fotosApi 
+        },
+        (erro) => console.log(erro)
+        
+      )
   }
 
   ngOnInit() {}
+
+  excluir(fotoApagada: Foto){
+
+    this.fotoService
+      .deletar(fotoApagada)
+      .subscribe(
+        () => {
+          //versão didática :)
+          /* this.listaFotos = this.listaFotos
+                              .filter(
+                                (foto) => {
+                                  if(foto != fotoApagada){
+                                    return foto
+                                  }
+                                }
+                              ) */
+          
+          this.listaFotos = this.listaFotos.filter( foto => foto != fotoApagada)
+          
+          console.log(`Apagou ${fotoApagada.titulo}`)
+        }
+      )
+  }
 
 }
