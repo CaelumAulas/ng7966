@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FotoService } from '../servicos/foto.service';
 import { Foto } from '../foto/foto';
-import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'caelumpic-listagem',

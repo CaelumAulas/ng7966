@@ -17,7 +17,7 @@ export class FotoService {
     }
 
     cadastrar(foto: Foto): Observable<Object> {
-        return this.conexaoApi.post(this.url, foto)
+        return this.conexaoApi.post(this.url, foto, {observe: 'response'})
     }
 
     deletar(foto: Foto): Observable<Object> {
@@ -25,8 +25,12 @@ export class FotoService {
         return this.conexaoApi.delete(this.url+foto._id)
     }
     
-    editar(){}
-
-    buscar(){}
+    buscar(fotoId: string): Observable<Foto> {
+        return this.conexaoApi.get<Foto>(this.url+fotoId)
+    }
+    
+    editar(foto: Foto){
+        return this.conexaoApi.put(this.url+foto._id, foto)
+    }
 
 }
